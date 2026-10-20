@@ -1,0 +1,133 @@
+import { useState } from "react";
+import image from "./image.svg";
+import maskGroup from "./mask-group.png";
+import vector from "./vector.svg";
+import vector2 from "./vector-2.svg";
+import vector3 from "./vector-3.svg";
+import vector4 from "./vector-4.svg";
+import vector5 from "./vector-5.svg";
+import vector6 from "./vector-6.svg";
+
+const contactDetails = [
+  {
+    type: "email",
+    value: "dervla@wildlingadventures.com",
+    iconLayers: [
+      {
+        src: vector,
+        className: "absolute w-[96.35%] h-[88.02%] top-[11.98%] left-[3.65%]",
+      },
+      {
+        src: image,
+        className: "absolute w-[96.35%] h-[79.69%] top-[20.31%] left-[3.65%]",
+      },
+    ],
+  },
+  {
+    type: "website",
+    value: "wildlingadventures.com",
+    iconLayers: [
+      {
+        src: vector2,
+        className: "absolute w-[96.35%] h-[96.35%] top-[3.65%] left-[3.65%]",
+      },
+      {
+        src: vector3,
+        className: "absolute w-[96.35%] h-[54.69%] top-[45.31%] left-[3.65%]",
+      },
+      {
+        src: vector4,
+        className: "absolute w-[71.35%] h-[94.83%] top-[5.17%] left-[28.65%]",
+      },
+    ],
+  },
+  {
+    type: "phone",
+    value: "+13022869971",
+    iconLayers: [
+      {
+        src: vector5,
+        className: "absolute w-[83.85%] h-[96.35%] top-[3.65%] left-[16.15%]",
+      },
+      {
+        src: vector6,
+        className: "absolute w-[54.69%] h-[29.69%] top-[70.31%] left-[45.31%]",
+      },
+    ],
+  },
+];
+
+const ContactIcon = ({
+  layers,
+}: {
+  layers: { src: string; className: string }[];
+}): JSX.Element => {
+  return (
+    <span className="relative w-4 h-4" aria-hidden="true">
+      {layers.map((layer, index) => (
+        <img
+          key={`${layer.src}-${index}`}
+          className={layer.className}
+          alt=""
+          src={layer.src}
+        />
+      ))}
+    </span>
+  );
+};
+
+export const EmailSignatures = (): JSX.Element => {
+  const [email, setEmail] = useState("");
+
+  return (
+    <article
+      className="flex items-center gap-4 p-4 relative bg-white w-full min-w-[600px] min-h-[120px]"
+      aria-label="Dervla Pinto email signature"
+    >
+      <img
+        className="relative w-[87px] h-[87px]"
+        alt="Portrait of Dervla Pinto"
+        src={maskGroup}
+      />
+      <section className="flex flex-col items-start gap-4 relative flex-1 grow border-r [border-right-style:solid] border-[#e0e0e0]">
+        <header className="flex items-center gap-4 relative self-stretch w-full flex-[0_0_auto]">
+          <div className="flex-1 grow flex flex-col items-start relative">
+            <h1 className="relative self-stretch mt-[-1.00px] [font-family:'Sofia_Sans_Extra_Condensed-SemiBold',Helvetica] font-semibold text-[#26333a] text-[32px] tracking-[0] leading-7">
+              DERVLA PINTO
+            </h1>
+            <p className="relative self-stretch [font-family:'Sofia_Sans_Extra_Condensed-Regular',Helvetica] font-normal text-[#667085] text-[15px] tracking-[0] leading-6">
+              Founder and Adventure Specialist
+            </p>
+          </div>
+        </header>
+      </section>
+      <address className="w-[300px] gap-4 flex flex-col items-start relative not-italic">
+        <div className="flex flex-col items-start gap-2 relative self-stretch w-full flex-[0_0_auto]">
+          {contactDetails.map((contact) => (
+            <div
+              key={contact.type}
+              className="flex items-center gap-2 relative self-stretch w-full flex-[0_0_auto]"
+            >
+              <ContactIcon layers={contact.iconLayers} />
+              {contact.type === "email" ? (
+                <input
+                  className="relative flex-1 mt-[-1.00px] [font-family:'Andale_Mono-Regular',Helvetica] font-normal text-[#26333a] text-[15px] tracking-[0] leading-6 [background:transparent] border-[none] p-0"
+                  aria-label="Email address"
+                  autoComplete="email"
+                  placeholder={contact.value}
+                  type="email"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                />
+              ) : (
+                <span className="relative flex-1 mt-[-1.00px] [font-family:'Andale_Mono-Regular',Helvetica] font-normal text-[#26333a] text-[15px] tracking-[0] leading-6">
+                  {contact.value}
+                </span>
+              )}
+            </div>
+          ))}
+        </div>
+      </address>
+    </article>
+  );
+};
